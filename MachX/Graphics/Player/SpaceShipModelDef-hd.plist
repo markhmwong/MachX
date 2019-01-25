@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+<!-- created with http://www.physicseditor.de -->
+
+<plist version="1.0">
+	<dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>1</integer>
+            <key>ptm_ratio</key>
+            <real>64</real>
+        </dict>
+        <key>bodies</key>
+		<dict>
+
+			<key>Player-hd</key>
+			<dict>
+				<key>anchorpoint</key>
+                <string>{ 0.5100,0.4621 }</string>
+				<key>fixtures</key>
+				<array>
+
+					<dict>
+                        <key>density</key> <real>2</real>
+                        <key>friction</key> <real>0</real>
+                        <key>restitution</key> <real>0</real>
+                        <key>filter_categoryBits</key> <integer>1</integer>
+                        <key>filter_groupIndex</key> <integer>0</integer>
+                        <key>filter_maskBits</key> <integer>65535</integer>
+                        <key>isSensor</key> <false/>
+                        <key>id</key> <string></string>
+                        <key>fixture_type</key> <string>POLYGON</string>
+
+						<key>polygons</key>
+						<array>
+							<array>	
+								<string>{ -8.000,-26.500 }</string>	
+								<string>{ -7.500,-24.000 }</string>	
+								<string>{ -24.500,-21.000 }</string>	
+								<string>{ -11.500,-26.000 }</string>
+							</array>
+							<array>	
+								<string>{ 23.000,-20.500 }</string>	
+								<string>{ 24.000,-10.500 }</string>	
+								<string>{ 21.500,-7.000 }</string>	
+								<string>{ 12.000,-0.500 }</string>	
+								<string>{ 6.500,-27.000 }</string>
+							</array>
+							<array>	
+								<string>{ -26.000,-9.500 }</string>	
+								<string>{ -26.000,-18.500 }</string>	
+								<string>{ -24.500,-21.000 }</string>	
+								<string>{ -7.500,-24.000 }</string>	
+								<string>{ -0.500,-22.000 }</string>	
+								<string>{ -14.500,-1.000 }</string>
+							</array>
+							<array>	
+								<string>{ 1.500,-24.000 }</string>	
+								<string>{ 6.000,-23.500 }</string>	
+								<string>{ -1.500,30.000 }</string>	
+								<string>{ -2.500,30.000 }</string>	
+								<string>{ -14.500,-1.000 }</string>	
+								<string>{ -0.500,-22.000 }</string>
+							</array>
+							<array>	
+								<string>{ 6.500,29.000 }</string>	
+								<string>{ -1.500,30.000 }</string>	
+								<string>{ 6.500,-27.000 }</string>	
+								<string>{ 12.000,-0.500 }</string>	
+								<string>{ 12.000,7.500 }</string>
+							</array>
+							<array>	
+								<string>{ -3.500,-24.000 }</string>	
+								<string>{ -0.500,-22.000 }</string>	
+								<string>{ -7.500,-24.000 }</string>
+							</array>
+							<array>	
+								<string>{ -9.000,28.500 }</string>	
+								<string>{ -14.000,8.500 }</string>	
+								<string>{ -14.500,-1.000 }</string>	
+								<string>{ -2.500,30.000 }</string>
+							</array>
+						</array>
+                    </dict>
+				</array>
+			</dict>
+		</dict>
+	</dict>
+</plist>
+
