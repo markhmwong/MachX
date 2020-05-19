@@ -104,7 +104,7 @@ typedef enum itemNumbers {
         //[self introScene];
         [self parallaxBG];
         [self schedule:@selector(update:)];
-        [self storeLayer];
+//        [self storeLayer];
         [self settingsLayer];
         [self playCount];
         [self menu];
