@@ -10,4 +10,7 @@ Good Luck!
 https://youtu.be/Ey_bntaPvJA
 
 ## Screenshots
-[[https://github.com/markhmwong/MachX/blob/master/Media/SS1.jpg|Mach X Screenshot]]
+![Mach X Screenshot](https://github.com/markhmwong/MachX/blob/master/Media/SS1.jpg)
+![Mach X Screenshot](https://github.com/markhmwong/MachX/blob/master/Media/SS2.jpg)
+![Mach X Screenshot](https://github.com/markhmwong/MachX/blob/master/Media/SS3.jpg)
+![Mach X Screenshot](https://github.com/markhmwong/MachX/blob/master/Media/SS4.jpg)
