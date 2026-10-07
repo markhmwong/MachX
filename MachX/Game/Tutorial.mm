@@ -271,7 +271,7 @@ typedef enum itemNumbers {
     
 }
 
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
+- (void)accelerometerDidAccelerate:(CMAcceleration)acceleration {
     if (acceleration.x < 0.001 && acceleration.x > -0.65) {
         //LEFT
         _player.body->ApplyLinearImpulse(b2Vec2((acceleration.x * 20) * [_player getTurnSpeedStat], 0), [_player getBodyPosition]);

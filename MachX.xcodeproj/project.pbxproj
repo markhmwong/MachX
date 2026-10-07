@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DC0DE02250A000100A1B2C3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC0DE01250A000100A1B2C3 /* CoreMotion.framework */; };
 		4D0C46D321ABCDC900153E76 /* CCActionGrid3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C460421ABCDC800153E76 /* CCActionGrid3D.m */; };
 		4D0C46D421ABCDC900153E76 /* CCParticleSystemQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C460521ABCDC800153E76 /* CCParticleSystemQuad.m */; };
 		4D0C46D521ABCDC900153E76 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C460621ABCDC800153E76 /* ccFPSImages.m */; };
@@ -395,6 +396,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4DC0DE01250A000100A1B2C3 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		4D0C460321ABCDC800153E76 /* CCActionPageTurn3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionPageTurn3D.h; sourceTree = "<group>"; };
 		4D0C460421ABCDC800153E76 /* CCActionGrid3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionGrid3D.m; sourceTree = "<group>"; };
 		4D0C460521ABCDC800153E76 /* CCParticleSystemQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemQuad.m; sourceTree = "<group>"; };
@@ -1046,6 +1048,7 @@
 				4DE255D4167B24F500C7F723 /* Foundation.framework in Frameworks */,
 				4DE255D6167B24F500C7F723 /* CoreGraphics.framework in Frameworks */,
 				4DE255D8167B24F500C7F723 /* GameKit.framework in Frameworks */,
+				4DC0DE02250A000100A1B2C3 /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1500,6 +1503,7 @@
 				4DE255D3167B24F500C7F723 /* Foundation.framework */,
 				4DE255D5167B24F500C7F723 /* CoreGraphics.framework */,
 				4DE255D7167B24F500C7F723 /* GameKit.framework */,
+				4DC0DE01250A000100A1B2C3 /* CoreMotion.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
