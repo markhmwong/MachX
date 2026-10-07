@@ -317,10 +317,7 @@ static BOOL configured = FALSE;
 }
 
 -(BOOL) isOtherAudioPlaying {
-	UInt32 isPlaying = 0;
-	UInt32 varSize = sizeof(isPlaying);
-	AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
-	return (isPlaying != 0);
+	return [[AVAudioSession sharedInstance] isOtherAudioPlaying];
 }
 
 -(void) setMode:(tAudioManagerMode) mode {
@@ -398,8 +395,7 @@ static BOOL configured = FALSE;
 	if ((self = [super init])) {
 
 		//Initialise the audio session
-//		AVAudioSession* session = [AVAudioSession sharedInstance];
-//		session.delegate = self;
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAudioSessionInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
 
         [[AVAudioSession sharedInstance] setActive:YES error:nil];
         
@@ -475,27 +471,8 @@ static BOOL configured = FALSE;
 	//Calling audio route stuff on the simulator causes problems
 	return NO;
 #else
-	CFStringRef newAudioRoute;
-	UInt32 propertySize = sizeof (CFStringRef);
-
-	AudioSessionGetProperty (
-							 kAudioSessionProperty_AudioRoute,
-							 &propertySize,
-							 &newAudioRoute
-							 );
-
-	if (newAudioRoute == NULL) {
-		//Don't expect this to happen but playing safe otherwise a null in the CFStringCompare will cause a crash
-		return YES;
-	} else {
-		CFComparisonResult newDeviceIsMuted =	CFStringCompare (
-																 newAudioRoute,
-																 (CFStringRef) @"",
-																 0
-																 );
-
-		return (newDeviceIsMuted == kCFCompareEqualTo);
-	}
+	//The C AudioSession API is gone; an empty output route is the closest equivalent of the old check
+	return ([[[AVAudioSession sharedInstance] currentRoute].outputs count] == 0);
 #endif
 }
 
@@ -716,14 +693,17 @@ static BOOL configured = FALSE;
 	[self audioSessionResumed];
 }
 
-#if __CC_PLATFORM_IOS >= 40000
--(void) endInterruptionWithFlags:(NSUInteger)flags {
-	CDLOGINFO(@"Denshion::CDAudioManager - interruption ended with flags %i",flags);
-	if (flags == AVAudioSessionInterruptionFlags_ShouldResume) {
-		[self audioSessionResumed];
+-(void) handleAudioSessionInterruption:(NSNotification *)notification {
+	NSUInteger type = [[notification.userInfo objectForKey:AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
+	if (type == AVAudioSessionInterruptionTypeBegan) {
+		[self beginInterruption];
+	} else {
+		NSUInteger options = [[notification.userInfo objectForKey:AVAudioSessionInterruptionOptionKey] unsignedIntegerValue];
+		if (options & AVAudioSessionInterruptionOptionShouldResume) {
+			[self audioSessionResumed];
+		}
 	}
 }
-#endif
 
 -(void)audioSessionInterrupted
 {

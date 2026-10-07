@@ -14,7 +14,6 @@
 #import "ShootingStars.h"
 #import "Background.h"
 #import "SDCloudUserDefaults.h"
-#import <Twitter/Twitter.h>
 #import "GameManager.h"
 #import "CCScrollLayer.h"
 #import "StoreMenuLayer.h"
@@ -27,7 +26,7 @@
 @class Background;
 
 // HelloWorldLayer
-@interface MainScreen : CCLayer <GKLeaderboardViewControllerDelegate>
+@interface MainScreen : CCLayer <GKGameCenterControllerDelegate>
 {
     Background *_parallax;
     CCLabelTTF *_playCountLabel;

@@ -166,62 +166,36 @@ typedef enum menuState {
 }
 
 - (void) tweetSL {
+    // Twitter/Social framework sharing is gone on modern iOS; use the system share sheet.
     NSString *tweetStr;
-    //using social framework
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
-    {
-        SLComposeViewController *tweetSheet = [SLComposeViewController
-                                               composeViewControllerForServiceType:SLServiceTypeTwitter];
-        
-        
-        switch (arc4random() % 5) {
-            case 0:
-                tweetStr = [NSString stringWithFormat:@"I reached %dm in an intense game of Mach X! Try and beat that!", [_playerStats getDistance]];
-                break;
-            case 1:
-                tweetStr = [NSString stringWithFormat:@"I reached %dm in an intense game of Mach X! Woohoo!", [_playerStats getDistance]];
-                break;
-            case 2:
-                tweetStr = [NSString stringWithFormat:@"Think you can beat %dm in an intense game of Mach X?", [_playerStats getDistance]];
-                break;
-            case 3:
-                tweetStr = [NSString stringWithFormat:@"Yeah I reached %dm in Mach X... oh so you heard.. Just making sure!", [_playerStats getDistance]];
-                break; 
-            case 4:
-                tweetStr = [NSString stringWithFormat:@"YYEEAAAHHH! I got %dm in Mach X. You like that? Cause I do!", [_playerStats getDistance]];
-                break;
-            default:
-                tweetStr = [NSString stringWithFormat:@"I reached %dm in an intense game of Mach X! Try and beat that!", [_playerStats getDistance]];
-                break;
-        }
-        
-        //set tweetsheet
-        [tweetSheet setInitialText:tweetStr];
-        
-        tweetSheet.completionHandler = ^(SLComposeViewControllerResult result) {
-            if (result == SLComposeViewControllerResultDone) {
-                // the user finished composing a tweet
-            }
-            else if (result == SLComposeViewControllerResultCancelled) {
-                // the user cancelled composing a tweet 
-            }
-            [viewController dismissViewControllerAnimated:YES completion:nil];
-
-        };
-        
-        [[[CCDirector sharedDirector] view] addSubview:viewController.view];
-        [viewController presentViewController:tweetSheet animated:YES completion:nil];
-
+    switch (arc4random() % 5) {
+        case 0:
+            tweetStr = [NSString stringWithFormat:@"I reached %dm in an intense game of Mach X! Try and beat that!", [_playerStats getDistance]];
+            break;
+        case 1:
+            tweetStr = [NSString stringWithFormat:@"I reached %dm in an intense game of Mach X! Woohoo!", [_playerStats getDistance]];
+            break;
+        case 2:
+            tweetStr = [NSString stringWithFormat:@"Think you can beat %dm in an intense game of Mach X?", [_playerStats getDistance]];
+            break;
+        case 3:
+            tweetStr = [NSString stringWithFormat:@"Yeah I reached %dm in Mach X... oh so you heard.. Just making sure!", [_playerStats getDistance]];
+            break; 
+        case 4:
+            tweetStr = [NSString stringWithFormat:@"YYEEAAAHHH! I got %dm in Mach X. You like that? Cause I do!", [_playerStats getDistance]];
+            break;
+        default:
+            tweetStr = [NSString stringWithFormat:@"I reached %dm in an intense game of Mach X! Try and beat that!", [_playerStats getDistance]];
+            break;
     }
-    else {
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"Sorry"
-                                  message:@"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"
-                                  delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-        [alertView show];
-    }
+    
+    UIActivityViewController *shareSheet = [[[UIActivityViewController alloc] initWithActivityItems:@[tweetStr] applicationActivities:nil] autorelease];
+
+    UIViewController *presenter = [CCDirector sharedDirector];
+    // iPad presents the share sheet as a popover, which needs an anchor.
+    shareSheet.popoverPresentationController.sourceView = presenter.view;
+    shareSheet.popoverPresentationController.sourceRect = CGRectMake(CGRectGetMidX(presenter.view.bounds), CGRectGetMidY(presenter.view.bounds), 1, 1);
+    [presenter presentViewController:shareSheet animated:YES completion:nil];
 }
 
 - (void) showButtons {

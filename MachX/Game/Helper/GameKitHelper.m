@@ -60,8 +60,8 @@
 #pragma mark UIViewController stuff
 
 -(UIViewController*) getRootViewController {
-    return [UIApplication
-            sharedApplication].keyWindow.rootViewController;
+    // keyWindow is unreliable under the scene life cycle; the director is always on screen.
+    return [CCDirector sharedDirector];
 }
 
 -(void)presentViewController:(UIViewController*)vc {
@@ -79,17 +79,12 @@
         return;
     }
     
-    //2: Create a GKScore object
-    GKScore* gkScore =
-    [[GKScore alloc]
-     initWithCategory:category];
-    
-    //3: Set the score value
-    gkScore.value = score;
-    
-    //4: Send the score to Game Center
-    [gkScore reportScoreWithCompletionHandler:
-     ^(NSError* error) {
+    //2: Send the score to Game Center
+    [GKLeaderboard submitScore:(NSInteger)score
+                       context:0
+                        player:[GKLocalPlayer localPlayer]
+                leaderboardIDs:@[category]
+             completionHandler:^(NSError* error) {
          
          [self setLastError:error];
          

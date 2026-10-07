@@ -14,7 +14,6 @@
 #import "ShootingStars.h"
 #import "Background.h"
 #import "SDCloudUserDefaults.h"
-#import <Twitter/Twitter.h>
 #import "GameManager.h"
 #import "CCScrollLayer.h"
 #import "StoreMenuLayer.h"

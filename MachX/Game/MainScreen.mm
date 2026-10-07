@@ -138,7 +138,7 @@ typedef enum itemNumbers {
 
 - (void) facebookButton {
     NSURL *url = [NSURL URLWithString:@"http://www.facebook.com/106361042867903"];
-    [[UIApplication sharedApplication] openURL:url];
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 
 - (void) introScene {
@@ -666,24 +666,17 @@ typedef enum itemNumbers {
 }
 
 - (void) showLeaderBoardGameCenter:(NSString *) leaderboardKey {
-    
-    GKLeaderboardViewController *leaderboardController = [[GKLeaderboardViewController alloc] init];
-    if (leaderboardController != NULL)
-    {
-        leaderboardController.leaderboardDelegate = self;
-        leaderboardController.category = leaderboardKey;
-        leaderboardController.timeScope = GKLeaderboardTimeScopeAllTime;
-        gcViewController = [[UIViewController alloc] init];
-        [[[CCDirector sharedDirector] view] addSubview:gcViewController.view];
-        [gcViewController presentViewController:leaderboardController animated:YES completion:nil];
-    }
+    GKGameCenterViewController *leaderboardController =
+        [[[GKGameCenterViewController alloc] initWithLeaderboardID:leaderboardKey
+                                                       playerScope:GKLeaderboardPlayerScopeGlobal
+                                                         timeScope:GKLeaderboardTimeScopeAllTime] autorelease];
+    leaderboardController.gameCenterDelegate = self;
+    [[CCDirector sharedDirector] presentViewController:leaderboardController animated:YES completion:nil];
 }
 
-- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *) viewController
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
 {
-    //AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-	[gcViewController dismissViewControllerAnimated:YES completion:nil];
-	//[gcViewController release];
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

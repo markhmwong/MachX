@@ -11,8 +11,6 @@
 #import "XPManager.h"
 #import "PlayerStats.h"
 #import "Game.h"
-#import <Twitter/Twitter.h>
-#import <Social/Social.h>
 #import "SDCloudUserDefaults.h"
 #import "GameManager.h"
 #import "Background.h"
