@@ -26,6 +26,10 @@
 #import "ccMacros.h"
 #import "ccTypes.h"
 
+#ifdef __CC_PLATFORM_IOS
+#import <CoreMotion/CoreMotion.h>
+#endif
+
 
 @class CCTexture2D;
 @class CCDirector;
@@ -150,11 +154,10 @@
 
 #ifdef __CC_PLATFORM_IOS
 /** CCAccelerometerDelegate delegate */
-@class UIAcceleration;
-@class UIAccelerometer;
 @protocol CCAccelerometerDelegate <NSObject>
 
 @optional
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration;
+/** Called with the raw acceleration in g, device axes (same convention as the old UIAcceleration). */
+- (void)accelerometerDidAccelerate:(CMAcceleration)acceleration;
 @end
 #endif // __CC_PLATFORM_IOS

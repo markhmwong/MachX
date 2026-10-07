@@ -39,6 +39,42 @@
 #import "Support/CGPointExtension.h"
 
 #ifdef __CC_PLATFORM_IOS
+#import <CoreMotion/CoreMotion.h>
+
+// UIAccelerometer is gone from the iOS 27 SDK. A single shared CMMotionManager feeds
+// whichever layer is current, matching UIAccelerometer's single-delegate behaviour.
+static CMMotionManager *sAccelMotionManager = nil;
+static CCLayer *sAccelLayer = nil;
+static NSTimeInterval sAccelInterval = 1.0 / 60.0;
+
+static void CCLayerStopAccelerometer(CCLayer *layer)
+{
+	if( sAccelLayer == layer ) {
+		sAccelLayer = nil;
+		[sAccelMotionManager stopAccelerometerUpdates];
+	}
+}
+
+static void CCLayerStartAccelerometer(CCLayer *layer)
+{
+	if( sAccelMotionManager == nil )
+		sAccelMotionManager = [[CMMotionManager alloc] init];
+
+	[sAccelMotionManager stopAccelerometerUpdates];
+	sAccelLayer = layer;
+	if( ! sAccelMotionManager.accelerometerAvailable )
+		return;
+
+	sAccelMotionManager.accelerometerUpdateInterval = sAccelInterval;
+	[sAccelMotionManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData *data, NSError *error) {
+		CCLayer *target = sAccelLayer;
+		if( data != nil && [target respondsToSelector:@selector(accelerometerDidAccelerate:)] )
+			[target accelerometerDidAccelerate:data.acceleration];
+	}];
+}
+#endif // __CC_PLATFORM_IOS
+
+#ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif defined(__CC_PLATFORM_MAC)
@@ -112,16 +148,18 @@
 		_accelerometerEnabled = enabled;
 		if( _isRunning ) {
 			if( enabled )
-				[[UIAccelerometer sharedAccelerometer] setDelegate:(id<UIAccelerometerDelegate>)self];
+				CCLayerStartAccelerometer(self);
 			else
-				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+				CCLayerStopAccelerometer(self);
 		}
 	}
 }
 
 -(void) setAccelerometerInterval:(float)interval
 {
-	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:interval];
+	sAccelInterval = interval;
+	if( sAccelMotionManager )
+		sAccelMotionManager.accelerometerUpdateInterval = interval;
 }
 
 -(BOOL) isTouchEnabled
@@ -378,7 +416,7 @@
 {
 #ifdef __CC_PLATFORM_IOS
 	if( _accelerometerEnabled )
-		[[UIAccelerometer sharedAccelerometer] setDelegate:(id<UIAccelerometerDelegate>)self];
+		CCLayerStartAccelerometer(self);
 #endif
 
 	[super onEnterTransitionDidFinish];
@@ -394,7 +432,7 @@
 		[[director touchDispatcher] removeDelegate:self];
 
 	if( _accelerometerEnabled )
-		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+		CCLayerStopAccelerometer(self);
 
 #elif defined(__CC_PLATFORM_MAC)
 	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
